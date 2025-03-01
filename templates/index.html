@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Services</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f7fa;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+        h2 {
+            text-align: center;
+            color: #333;
+            margin: 20px 0;
+        }
+
+        #serviceID {
+            display: flex;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .service-card {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            word-wrap: break-word;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card h2 {
+            font-size: 1.5em;
+            color: #444;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .service-card p {
+            font-size: 1em;
+            color: #666;
+            margin: 0;
+            word-wrap: break-word;
+        }
+
+        .service-card .image-name {
+            font-weight: normal;
+            color: #3a3a3a;
+            background-color: #f3f3f3;
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: block;
+            overflow: hidden;
+            text-align: center;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            cursor: pointer;
+            user-select: text;
+        }
+
+        .service-card .image-copy {
+            font-weight: bold;
+            color: #007bff; /* Changed text color */
+            background-color: #e9f7fe; /* Changed background color */
+            padding: 5px 10px;
+            border-radius: 4px;
+            display: block;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+            cursor: pointer;
+            user-select: text;
+        }
+
+
+        .service-card .image-name:hover {
+            background-color: #f0e5c7;
+            color: #2a2a2a;
+        }
+
+        .reload-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            color: white;
+            background-color: #007bff;
+            text-decoration: none;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            text-align: center;
+        }
+
+/*        .reload-button:hover {
+            background-color: #0056b3;
+        }*/
+
+       .reload-button {
+            display: inline-block; /* Makes it behave like a button */
+            text-align: center; /* Centers the text inside the button */
+            padding: 10px 20px; /* Adjust padding for a button-like appearance */
+            font-size: 16px;
+            color: #ffffff;
+            background-color: #007bff; /* Button background color */
+            text-decoration: none; /* Removes underline from the link */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s ease;
+            border: none; /* Optional: Removes any default border */
+            cursor: pointer; /* Makes it clear the element is clickable */
+        }
+
+        .reload-button:hover {
+            background-color: #0056b3; /* Darker blue on hover */
+        }
+
+
+
+    </style>
+</head>
+<body>
+    <h1>✨ Services List ✨</h1>
+
+    <!-- Reload Button -->
+    <a href="{{ reload_url }}" class="reload-button">Reload Services</a>
+
+    <div class="services-container">
+        {% for service in services %}
+        <div class="service-card">
+            <h2 id="serviceID" title="{{ service[0] }}">{{ service[0] }}</h2>
+            <p>
+                <!-- Improved display for long image names -->
+                <span class="image-name" title="{{ service[2] }}">
+                    tag: {{ service[2] }}
+                </span>
+                <span class="image-copy" title="{{ service[1] }}" onclick="copyToClipboard('{{ service[1] }}')">
+                    Copy
+                </span>
+            </p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        function copyToClipboard(text) {
+            // Create a temporary text area element
+            const textArea = document.createElement('textarea');
+            textArea.value = text;
+            document.body.appendChild(textArea);
+            
+            // Select the text and copy it to the clipboard
+            textArea.select();
+            document.execCommand('copy');
+            
+            // Remove the temporary text area
+            document.body.removeChild(textArea);
+            
+            // Notify the user
+            alert('Image name copied to clipboard: ' + text);
+        }
+    </script>
+</body>
+</html>
