@@ -39,10 +39,10 @@ networks:
 
 ### 3. Create `.env` File
 ```sh
-SECRET_TOKEN=ZY95q3443KvPsil  # Authentication token for webhook requests
+SECRET_TOKEN=ZY95q3443KvPsil  # Custom authentication token for webhook requests
 GIT_USERNAME=username        # Docker registry username
 GIT_PASSWORD=password        # Docker registry password
-BROWSER_TOKEN=123456         # Token for web interface access
+BROWSER_TOKEN=123456         # Custom Token for web interface access
 ROOT_PATH=/hook              # Custom path for webhooks
 ```
 
@@ -57,10 +57,16 @@ Once deployed, access the web UI to view services and images:
 ```
 http://<swarmcd-deployed-machine-ip>:5000/hook/?token=BROWSER_TOKEN
 ```
-This interface allows you to reload the service list when changes occur.
+This interface displays all services in the cluster along with their image tags. 
+It also allows you to reload the service list, which is essential when new services are added or removed.
+
+Now Swarmcd is all set to use. lets use it
+
+
 
 ## Webhook Functionality
 ### Environment Variables Setup
+
 ```sh
 export SECRET_TOKEN=ZY95q3443KvPsil
 export ROOT_PATH=/hook
@@ -80,7 +86,7 @@ curl -X POST "http://<swarmcd-deployed-machine-ip>:5000$ROOT_PATH/" \
     }'
 ```
 
-## Integrating with GitLab CI/CD
+## Integrating with GitLab CI
 Define `SECRET_TOKEN` in your GitLab CI/CD runner variables and integrate the webhook in `.gitlab-ci.yml`:
 
 ```yaml
@@ -113,6 +119,7 @@ deploy_service:
         -H "Authorization: Bearer $SECRET_TOKEN" \
         -d '{"project":{"image_name":"$IMAGE_NAME","tag_name":"$IMAGE_TAG"}}'
 ```
+Now we have a fully automated CICD for swarm cluster.
 
 ## Using Nginx as a Proxy
 To expose the webhook securely, add the following configuration to your Nginx `server` block:
@@ -145,9 +152,7 @@ curl -X POST "https://project.com/hook/" \
     }'
 ```
 
+Note that this may not work very well for multi node swarm cluster
 ## Contributing
-We welcome contributions! Feel free to fork this repository and submit pull requests.
-
----
-This document has been optimized for clarity, readability, and usability. 🚀
+I welcome contributions! Feel free to fork this repository and submit pull requests.
 
