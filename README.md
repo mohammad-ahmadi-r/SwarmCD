@@ -24,7 +24,7 @@ version: '3.8'
 
 services:
   flask:
-    image: dockerhub.com/swarmcd:0.1
+    image: ahmadim/swarmcd:latest
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
