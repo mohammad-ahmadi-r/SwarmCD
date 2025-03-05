@@ -29,6 +29,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "5000:5000"
+    env_file:
+      - .env
     networks:
       - swarmcd-network
 
@@ -153,6 +155,8 @@ curl -X POST "https://project.com/hook/" \
 ```
 
 Note that this may not work very well for multi node swarm cluster
+Also make sure your runner can reach the target environment
+
 ## Contributing
 I welcome contributions! Feel free to fork this repository and submit pull requests.
 
